@@ -3,7 +3,7 @@ Proyecto de prácticas de la asignatura Inteligencia Ambiental.
 
 Aplicación para Android, iOS y Windows Phone con servidor en Python. Mediante este software, puede obtenerse el texto de una imagen traducido a casi cualquier lenguaje.
 
-### Instalar librerías / Packages installation
+### Instalar librerías
 Bajo el entorno Python2.7; es necesario tener instalado la herramienta **`pip`**.
 
 ```
