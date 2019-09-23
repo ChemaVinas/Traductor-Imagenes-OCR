@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>ImageTranslator App</title>
+
+  <script src="lib/onsen/js/onsenui.js"></script>
+
+  <link rel="stylesheet" href="lib/onsen/css/onsenui.css">
+  <link rel="stylesheet" href="lib/onsen/css/onsen-css-components.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/mi_css.css">
+
+</head>
+
+<body>
+
+  <ons-toolbar>
+    <div class="left">
+      <ons-icon id="boton-info" icon="ion-information-circled" size="25px, material:24px"></ons-icon>
+    </div>
+    <div id="titulo-app" class="center">ImageTranslator App</div>
+  </ons-toolbar>
+
+  <div id='encuadre'></div>
+
+  <div style="height: 34%; padding: 1px 0 0 0;">
+    <div id="contenedor-traduccion" class="card">
+      <h2 id="titulo-traduccion" class="card__title">Traduciendo ("origen" a "destino"):</h2>
+      <ons-progress-bar id="barra-carga" indeterminate style="visibility: hidden"></ons-progress-bar>
+      <div id="texto-traduccion" class="card__content"></div>
+    </div>
+  </div>
+
+  <div id="contenedor-botones">
+    <ons-fab id="boton-opciones" class="botones">
+      <ons-icon icon="ion-android-settings"></ons-icon>
+    </ons-fab>
+
+    <ons-fab id="boton-galeria" class="botones">
+      <ons-icon icon="ion-android-image"></ons-icon>
+    </ons-fab>
+
+    <ons-fab id="boton-camara" class="botones">
+      <ons-icon icon="ion-android-camera"></ons-icon>
+    </ons-fab>
+  </div>
+
+  <div id="mask-popover" class="popover-mask popover-mask--material" style="visibility: hidden"></div>
+  <div id="popover" class="popover popover--material popover--left" style="top: 31%; left: 9%; visibility: hidden">
+    <div class="popover__arrow popover--material__arrow popover--left__arrow"></div>
+    <div class="popover__content popover--material__content popover--left__content">
+      <div style="text-align: center; opacity: 0.8; margin-top: -10px; margin-left: 6px">
+        <h4>Ip/Puerto del servidor</h4>
+        <p>
+          <ons-input id="IP_setter" modifier="underbar" placeholder="IP (ej: 192.168.0.0)" float></ons-input>
+        </p>
+        <p>
+          <ons-input id="PORT_setter" modifier="underbar" placeholder="PUERTO (ej: 9797)" float></ons-input>
+        </p>
+        <h4>Idiomas</h4>
+        <ons-row class="row">
+          Traducir de
+          <ons-select class="opciones-idioma" id="lang_src">
+            <select id="opciones-idiomas-origen" class="select-input">
+            </select>
+          </ons-select>
+        </ons-row>
+        <ons-row class="row row2">
+          a
+          <ons-select class="opciones-idioma" id="lang_dest">
+            <select id="opciones-idiomas-destino" class="select-input">
+            </select>
+          </ons-select>
+        </ons-row>
+        <p>
+          <ons-button id="botonAceptarOpciones">Aceptar</ons-button>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div id="info-mask-popover" class="popover-mask popover-mask--material" style="visibility: hidden"></div>
+  <div id="info-popover" class="popover popover--material popover--left" style="top: 31%; left: 9%; visibility: hidden">
+    <div class="popover__arrow popover--material__arrow popover--left__arrow"></div>
+    <div class="popover__content popover--material__content popover--left__content" style="background-color: #fdb826">
+      <div style="text-align: center; opacity: 0.8; margin-top: -10px; margin-left: 6px">
+        <h1>INFO</h1>
+        <p>
+          Proyecto creado por:
+        </p>
+        <h4>Fco. Javier Hortelano Ruiz</h4>
+        <h4>José Mª Viñas Martínez</h4>
+        <p>
+          <ons-button id="botonCerrarInfo">Cerrar</ons-button>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <ons-modal id="pantalla-carga" direction="up">
+    <div style="text-align: center">
+      <p>
+        <ons-icon icon="md-spinner" size="28px" spin></ons-icon> Cargando...
+      </p>
+    </div>
+  </ons-modal>
+
+  <script type="text/javascript" src="cordova.js"></script>
+  <script type="text/javascript" src="js/miWebSocket.js"></script>
+  <script type="text/javascript" src="js/mi_app.js"></script>
+  <script type="text/javascript" src="js/idiomas.js"></script>
+  <script type="text/javascript">
+    var modal = document.getElementById('pantalla-carga');
+    modal.show();
+
+    mi_app.initialize();
+    miWebSocket.initialize();
+
+    document.addEventListener('DOMContentLoaded', function() {
+      introducir_idiomas_origen();
+      introducir_idiomas_destino();
+    }, false);
+
+    document.addEventListener("deviceready", function(event) {
+      document.getElementById('popover').style.visibility = 'visible';
+      document.getElementById('mask-popover').style.visibility = 'visible';
+      mi_app.cerrarPantallaCarga();
+    }, false);
+  </script>
+
+</body>
+
+</html>
